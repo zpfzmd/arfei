@@ -60,7 +60,7 @@ window.ARThreeOnLoad = function() {
 			var w = window.innerWidth;
 			var h = window.innerHeight;
 			renderer.setSize(w, h);
-			<!-- renderer.domElement.style.paddingBottom = (w-h) + 'px'; -->
+			renderer.domElement.style.padding-bottom= (w-h) + 'px';
 		} else {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
 				renderer.setSize(window.innerWidth, window.innerHeight);
@@ -106,7 +106,7 @@ window.ARThreeOnLoad = function() {
 		arController.addEventListener('getNFTMarker', function (ev) {
 		       if(bisplay===false){
 		       		video.play();
-		       		video.style.display="none";
+		       		video.style.display="block";
 		       		bisplay=true;
 		       }
 		       playingtime=Date.now();
