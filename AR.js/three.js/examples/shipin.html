@@ -47,12 +47,12 @@
 
 <script>
 
-let location_path = 'https://zpfzmd.github.io/arfei/AR.js';
+let location_path = '../';
         bisplay = false,
         playingtime = Date.now();
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({cameraParam: location_path+'data/data/camera_para.dat', 
+	ARController.getUserMediaThreeScene({cameraParam: location_path+'../data/data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
 		document.body.className = arController.orientation;
 		var renderer = new THREE.WebGLRenderer({antialias: true});
@@ -100,7 +100,7 @@ window.ARThreeOnLoad = function() {
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
 
-		arController.loadNFTMarker(location_path+'data/dataNFT/mc/mc', function(markerId) {
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/mc', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 		});
 		arController.addEventListener('getNFTMarker', function (ev) {
