@@ -1,25 +1,25 @@
 ﻿<html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <style>
-html,body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	text-align: center;
-	overflow-x: hidden;
-}
-.portrait canvas {
-	transform-origin: 0 0;
-	transform: rotate(-90deg) translateX(-100%);
-}
-.desktop canvas {
- 	transform: scale(-1, 1);
-}
-#video{
-	margin: 0;
-    z-index: 978;
-    position: relative;
-}
+<!-- html,body { -->
+	<!-- margin: 0; -->
+	<!-- padding: 0; -->
+	<!-- width: 100%; -->
+	<!-- text-align: center; -->
+	<!-- overflow-x: hidden; -->
+<!-- } -->
+<!-- .portrait canvas { -->
+	<!-- transform-origin: 0 0; -->
+	<!-- transform: rotate(-90deg) translateX(-100%); -->
+<!-- } -->
+<!-- .desktop canvas { -->
+ 	<!-- transform: scale(-1, 1); -->
+<!-- } -->
+<!-- #video{ -->
+	<!-- margin: 0; -->
+    <!-- z-index: 978; -->
+    <!-- position: relative; -->
+<!-- } -->
 </style>
 <title>自然图片识别的例子</title>
 </head>
@@ -57,15 +57,15 @@ window.ARThreeOnLoad = function() {
 		document.body.className = arController.orientation;
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
-			var w = window.innerWidth ;
-			var h = window.innerHeight;
+			var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
+			var h = window.innerWidth;
 			renderer.setSize(w, h);
 			renderer.domElement.style.paddingBottom = (w-h) + 'px';
 		} else {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
 			} else {
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setSize(arController.videoWidth, arController.videoHeight);
 				document.body.className += ' desktop';
 			}
 		}
