@@ -46,38 +46,43 @@ html,body {
 </video>
 
 
-
 <script>
+
 let location_path = '../';
         bisplay = false,
         playingtime = Date.now();
 window.ARThreeOnLoad = function() {
+
 	ARController.getUserMediaThreeScene({cameraParam: location_path+'../data/data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
 		document.body.className = arController.orientation;
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
-			var w = window.innerWidth;
-			var h = window.innerHeight;
+			var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
+			var h = window.innerWidth;
 			renderer.setSize(w, h);
-			renderer.domElement.style.paddingbottom= (w-h) + 'px';
+			renderer.domElement.style.paddingBottom = (w-h) + 'px';
 		} else {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
 			} else {
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setSize(arController.videoWidth, arController.videoHeight);
 				document.body.className += ' desktop';
 			}
 		}
+
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
+
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
 		let video = document.getElementById( 'video' );
+
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
+
 		var sphere = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 8, 8),
 			new THREE.MeshNormalMaterial()
@@ -87,6 +92,7 @@ window.ARThreeOnLoad = function() {
 		sphere.position.x = 80;
 		sphere.position.y = 80;
 		sphere.scale.set(80,80,80);
+
 		var torus = new THREE.Mesh(
 			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
 			new THREE.MeshNormalMaterial()
@@ -94,6 +100,7 @@ window.ARThreeOnLoad = function() {
 		torus.material.shading = THREE.FlatShading;
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
+
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/mc', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 		});
@@ -116,17 +123,24 @@ window.ARThreeOnLoad = function() {
 	    },1000);
 		var tick = function() {
 			arScene.process();
+
 			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
+
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
+
 		tick();
+
 	}});
+
 	delete window.ARThreeOnLoad;
+
 };
+
 if (window.ARController && ARController.getUserMediaThreeScene) {
 	ARThreeOnLoad();
 }
