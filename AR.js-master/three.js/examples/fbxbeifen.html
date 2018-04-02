@@ -84,20 +84,14 @@
 	})
 
 	arToolkitSource.init(function onReady(){
-		onResize()
+		arToolkitSource.onResize(renderer.domElement)
 	})
 	
 	// handle resize
 	window.addEventListener('resize', function(){
-		onResize()
+		arToolkitSource.onResize(renderer.domElement)
 	})
-	function onResize(){
-		arToolkitSource.onResizeElement()	
-		arToolkitSource.copyElementSizeTo(renderer.domElement)	
-		if( arToolkitContext.arController !== null ){
-			arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)	
-		}	
-	}
+
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          initialize arToolkitContext
@@ -142,7 +136,7 @@
 		// barcodeValue: 5,
 		
 		type : 'pattern',
-		patternUrl : THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt',
+		patternUrl : '../../data/multi/patt.hiro'
 	})
 
     var mixers = [];
