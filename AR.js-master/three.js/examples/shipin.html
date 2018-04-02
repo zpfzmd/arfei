@@ -101,7 +101,7 @@ window.ARThreeOnLoad = function() {
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
 
-		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/mc', function(markerId) {
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 		});
 		arController.addEventListener('getNFTMarker', function (ev) {
