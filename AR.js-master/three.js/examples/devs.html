@@ -120,7 +120,7 @@
 	scene.add(markerRoot)
 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
 		type : 'pattern',
-		patternUrl : '../../data/multi/patt.ting',
+		patternUrl : '../../data/data/patt.hiro',
 		// patternUrl : '../../data/data/patt.kanji',
 	})
 
@@ -135,7 +135,7 @@
 	// ASCII file
 
 	var loader = new THREE.STLLoader();
-	loader.load( './models/stl/ttwan.stl', function ( geometry ) {
+	loader.load( './models/dae/monster.dae', function ( geometry ) {
 
 		var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
 		var mesh = new THREE.Mesh( geometry, material );
