@@ -90,13 +90,13 @@ window.ARThreeOnLoad = function() {
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
 
-		arController.loadNFTMarker(location_path+'../data/dataNFT/dayan/dayan', function(markerId) {
+		arController.loadNFTMarker(location_path+'../data/dataNFT/pinball ', function(markerId) {
 
 
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/monster.dae', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/fbx/ceshi.FBX', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
