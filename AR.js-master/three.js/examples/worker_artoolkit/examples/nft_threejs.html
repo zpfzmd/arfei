@@ -97,7 +97,6 @@ window.ARThreeOnLoad = function() {
 
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			var loader = new THREE.FBXLoader();
-			loader.options.convertUpAxis = true;
 
 					loader.load('./models/fbx/ceshi.FBX', function ( object ) {
 					object.mixer = new THREE.AnimationMixer( object );
