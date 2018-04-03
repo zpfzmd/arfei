@@ -33,6 +33,8 @@ html,body {
 
 <script src="../../vendor/three.js/examples/js/libs/stats.min.js"></script>
 <script src="../../vendor/three.js/ColladaLoader.js"></script>
+<script src="../../vendor/three.js/FBXLoader.js"></script>
+<script src="../../vendor/three.js/OrbitControls.js"></script>
 <script src="../../vendor/three.js/Animation.js"></script>
 <script src="../../vendor/three.js/AnimationHandler.js"></script>
 <script src="../../vendor/three.js/KeyFrameAnimation.js"></script>
@@ -94,31 +96,38 @@ window.ARThreeOnLoad = function() {
 
 
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			var loader = new THREE.ColladaLoader();
+			var loader = new THREE.FBXLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/fbx/ceshi.FBX', function (collada) {
-				dae = collada.scene;
-				dae.traverse( function (child) {
-					if (child instanceof THREE.SkinnedMesh) {
-						var animation = new THREE.Animation( child, child.geometry.animation );
-						animation.play();
+
+					loader.load('./models/fbx/ceshi.FBX', function ( object ) {
+					object.mixer = new THREE.AnimationMixer( object );
+					mixers.push( object.mixer );
+
+					var action = object.mixer.clipAction( object.animations[ 0 ] );
+					action.play();
+
+					object.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+
+							child.castShadow = true;
+							child.receiveShadow = true;
+						}						
+					} );
+
+					markerRoot.add( object );
+                    object.scale.x = object.scale.y = object.scale.z = 0.01;
+	                onRenderFcts.push(function(delta){
+			        if ( mixers.length > 0 ) {
+					      for ( var i = 0; i < mixers.length; i ++ ) {
+						mixers[ i ].update( delta);
 					}
-				});
-				//dae.scale.x = dae.scale.y = dae.scale.z = 1;
-				//dae.position.z = 0;
-				dae.position.z = 40;
-				dae.position.x = 80;
-				dae.position.y = 80;
-				//dae.rotation.x = Math.PI/2;
-
-
-				
-				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
-				dae.updateMatrix();
-				markerRoot.add( dae );
-				
-				arScene.scene.add(markerRoot);	
-			});
+				}
+				renderer.render( scene, camera );
+                arScene.scene.add(markerRoot);	
+				stats.update();
+		})
+				} );
 
 			// var markerRoot = arController.createThreeNFTMarker(markerId);
 			// markerRoot.add(sphere);
